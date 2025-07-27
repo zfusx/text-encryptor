@@ -100,14 +100,17 @@ wails build -platform linux/amd64
 
 ## 🎨 Screenshots
 
-### Encrypt Mode
+### 🔒 Encrypt Mode
 ![Encrypt Mode](screenshots/encrypt-mode.png)
+*Encrypting sensitive messages with military-grade Argon2id + ChaCha20-Poly1305*
 
-### Decrypt Mode  
+### 🔓 Decrypt Mode  
 ![Decrypt Mode](screenshots/decrypt-mode.png)
+*Decrypting messages with the same secure key*
 
-### Dark Theme
+### 🌙 Tokyo Night Dark Theme
 ![Dark Theme](screenshots/dark-theme.png)
+*Beautiful Tokyo Night inspired design that's easy on the eyes*
 
 ## 🤝 Contributing
 
