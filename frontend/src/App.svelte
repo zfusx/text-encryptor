@@ -312,15 +312,17 @@
     <!-- Output Section -->
     {#if outputText}
       <div class="card card-output w-full">
-        <h3 class="section-title section-title-output">
-          {isEncrypting ? "✅ Encrypted Text" : "✅ Decrypted Text"}
-        </h3>
+        <div class="output-header">
+          <h3 class="section-title section-title-output">
+            {isEncrypting ? "✅ Encrypted Text" : "✅ Decrypted Text"}
+          </h3>
+          <button on:click={copyToClipboard} class="btn-copy-external">
+            {copySuccess ? "✅ Copied!" : "📋 Copy"}
+          </button>
+        </div>
         <div class="output-container">
           <textarea value={outputText} readonly class="input textarea" rows="6"
           ></textarea>
-          <button on:click={copyToClipboard} class="btn-copy">
-            {copySuccess ? "✅ Copied!" : "📋 Copy"}
-          </button>
         </div>
       </div>
     {/if}
