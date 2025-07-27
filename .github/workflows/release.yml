@@ -1,0 +1,125 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build ${{ matrix.platform }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            platform: linux/amd64
+            name: text-encryptor-linux
+          - os: windows-latest
+            platform: windows/amd64
+            name: text-encryptor-windows.exe
+          - os: macos-latest
+            platform: darwin/amd64
+            name: text-encryptor-macos-intel
+          - os: macos-latest
+            platform: darwin/arm64
+            name: text-encryptor-macos-apple-silicon
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Wails
+        run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
+
+      - name: Install dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt update
+          sudo apt install -y libgtk-3-dev libwebkit2gtk-4.0-dev
+
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Build application
+        run: |
+          wails build -platform ${{ matrix.platform }} -o ${{ matrix.name }}
+
+      - name: Prepare artifacts (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          mkdir artifacts
+          copy "build\bin\${{ matrix.name }}" artifacts\
+
+      - name: Prepare artifacts (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          mkdir -p artifacts
+          if [ "${{ runner.os }}" = "macOS" ]; then
+            # Create DMG for macOS
+            hdiutil create -volname "T-Rex Text Encryptor" -srcfolder build/bin/text-encryptor.app -ov -format UDZO artifacts/${{ matrix.name }}.dmg
+          else
+            # Linux binary
+            cp build/bin/${{ matrix.name }} artifacts/
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.name }}
+          path: artifacts/*
+
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            text-encryptor-windows.exe/*
+            text-encryptor-linux/*
+            text-encryptor-macos-intel/*
+            text-encryptor-macos-apple-silicon/*
+          generate_release_notes: true
+          body: |
+            ## 🦕 T-Rex Text Encryptor Release
+            
+            ### Downloads:
+            - **Windows**: `text-encryptor-windows.exe` 
+            - **macOS Intel**: `text-encryptor-macos-intel.dmg`
+            - **macOS Apple Silicon**: `text-encryptor-macos-apple-silicon.dmg`
+            - **Linux**: `text-encryptor-linux`
+            
+            ### Features:
+            - 🛡️ Military-grade Argon2id + ChaCha20-Poly1305 encryption
+            - 🌙 Beautiful Tokyo Night theme
+            - 📋 One-click copy to clipboard
+            - 🔑 Flexible key management
+            
+            **Note**: On macOS, right-click and select "Open" on first run to bypass Gatekeeper.
+            On Windows, Windows Defender might warn - click "Run anyway" if you trust the source.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 

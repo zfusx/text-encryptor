@@ -1,0 +1,23 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "text-encryptor",
+  "outputfilename": "text-encryptor",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "zfusx",
+    "email": "zfusx@users.noreply.github.com"
+  },
+  "info": {
+    "productName": "T-Rex Text Encryptor",
+    "productVersion": "1.0.0",
+    "copyright": "© 2024 zfusx",
+    "comments": "Secure text encryption with T-Rex power!"
+  },
+  "assetdir": "./frontend/dist",
+  "build": {
+    "appicon": "./build/appicon.png"
+  }
+}

@@ -1,0 +1,325 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --tokyo-bg: #1a1b26;
+    --tokyo-bg-light: #24283b;
+    --tokyo-bg-lighter: #414868;
+    --tokyo-text: #c0caf5;
+    --tokyo-text-dim: #a9b1d6;
+    --tokyo-blue: #7aa2f7;
+    --tokyo-cyan: #7dcfff;
+    --tokyo-green: #9ece6a;
+    --tokyo-yellow: #e0af68;
+    --tokyo-orange: #ff9e64;
+    --tokyo-red: #f7768e;
+    --tokyo-purple: #bb9af7;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --tokyo-bg: #d5d6db;
+      --tokyo-bg-light: #e9e9ed;
+      --tokyo-bg-lighter: #dfe0e5;
+      --tokyo-text: #343b58;
+      --tokyo-text-dim: #565a6e;
+    }
+  }
+
+  body {
+    @apply bg-tokyo text-tokyo;
+    background: var(--tokyo-bg);
+    color: var(--tokyo-text);
+  }
+}
+
+@layer components {
+  /* Layout Components */
+  .app-container {
+    @apply min-h-screen;
+    background: var(--tokyo-bg);
+    background-image: radial-gradient(
+        circle at 20% 80%,
+        rgba(122, 162, 247, 0.15) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 80% 20%,
+        rgba(187, 154, 247, 0.15) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 40% 40%,
+        rgba(125, 207, 255, 0.1) 0%,
+        transparent 50%
+      );
+  }
+
+  .main-container {
+    @apply w-[90%] md:w-4/5 lg:w-1/2 max-w-7xl mx-auto px-6 py-8;
+    @apply lg:grid lg:grid-cols-2 lg:gap-12 lg:px-16 lg:py-12;
+  }
+
+  /* Header Components */
+  .header {
+    @apply text-center mb-12 lg:col-span-2 lg:mb-8;
+  }
+
+  .logo {
+    @apply w-24 h-24 mx-auto mb-6 rounded-full shadow-2xl;
+    @apply transition-all duration-300 hover:scale-105;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4),
+      0 0 40px rgba(122, 162, 247, 0.3);
+  }
+
+  .title {
+    @apply text-5xl font-extrabold mb-2 tracking-tight;
+    background: linear-gradient(
+      135deg,
+      var(--tokyo-blue),
+      var(--tokyo-purple),
+      var(--tokyo-cyan)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    @apply text-lg font-medium;
+    color: var(--tokyo-text-dim);
+  }
+
+  /* Mode Selector */
+  .mode-selector {
+    @apply flex justify-center mb-12 gap-4 p-2 rounded-2xl backdrop-blur-sm max-w-md mx-auto;
+    @apply lg:col-span-2 lg:mb-8;
+    background: rgba(36, 40, 59, 0.1);
+    border: 1px solid rgba(65, 72, 104, 0.3);
+  }
+
+  .mode-btn {
+    @apply px-8 py-4 rounded-xl font-semibold transition-all duration-300 border-none cursor-pointer text-base;
+  }
+
+  .mode-btn-encrypt {
+    @apply text-white shadow-lg;
+    background: linear-gradient(135deg, var(--tokyo-blue), var(--tokyo-cyan));
+    box-shadow: 0 8px 25px rgba(122, 162, 247, 0.4);
+  }
+
+  .mode-btn-decrypt {
+    @apply text-white shadow-lg;
+    background: linear-gradient(135deg, var(--tokyo-purple), var(--tokyo-cyan));
+    box-shadow: 0 8px 25px rgba(187, 154, 247, 0.4);
+  }
+
+  .mode-btn-inactive {
+    @apply hover:-translate-y-1;
+    background: var(--tokyo-bg-lighter);
+    color: var(--tokyo-text-dim);
+  }
+
+  .mode-btn-inactive:hover {
+    background: var(--tokyo-bg-light);
+    color: var(--tokyo-text);
+  }
+
+  /* Card Component */
+  .card {
+    @apply rounded-2xl p-8 mb-8 transition-all duration-300;
+    @apply hover:-translate-y-1 hover:shadow-2xl;
+    background: rgba(36, 40, 59, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(65, 72, 104, 0.3);
+  }
+
+  .card-key {
+    @apply lg:col-span-2 lg:max-w-4xl lg:justify-self-center;
+  }
+
+  .card-input {
+    @apply lg:col-span-1 lg:min-h-[400px] lg:flex lg:flex-col;
+  }
+
+  .card-output {
+    @apply lg:col-span-1 lg:min-h-[400px] lg:flex lg:flex-col;
+  }
+
+  /* Section Titles */
+  .section-title {
+    @apply text-2xl font-bold mb-6 flex items-center gap-3;
+  }
+
+  .section-title-key {
+    background: linear-gradient(
+      135deg,
+      var(--tokyo-yellow),
+      var(--tokyo-orange)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-title-encrypt {
+    background: linear-gradient(135deg, var(--tokyo-blue), var(--tokyo-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-title-decrypt {
+    background: linear-gradient(135deg, var(--tokyo-purple), var(--tokyo-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-title-output {
+    background: linear-gradient(135deg, var(--tokyo-green), var(--tokyo-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Form Components */
+  .form-group {
+    @apply mb-6;
+  }
+
+  .label {
+    @apply block text-base font-semibold mb-3;
+    color: var(--tokyo-text);
+  }
+
+  .input {
+    @apply w-full px-4 py-3 rounded-xl border-2 text-base;
+    @apply focus:outline-none focus:-translate-y-1 transition-all duration-300;
+    background: var(--tokyo-bg-light);
+    color: var(--tokyo-text);
+    border-color: rgba(65, 72, 104, 0.3);
+  }
+
+  .input:focus {
+    border-color: var(--tokyo-blue);
+    box-shadow: 0 0 0 4px rgba(122, 162, 247, 0.1);
+    background: var(--tokyo-bg);
+  }
+
+  .input::placeholder {
+    color: var(--tokyo-text-dim);
+  }
+
+  .textarea {
+    @apply font-mono text-sm resize-y min-h-[120px] lg:min-h-[250px] lg:flex-1;
+  }
+
+  /* Key Input Row */
+  .key-input-row {
+    @apply flex gap-4 flex-wrap items-end lg:gap-8;
+  }
+
+  .key-input-main {
+    @apply flex-1 min-w-[250px];
+  }
+
+  .key-info {
+    @apply mt-3 p-3 rounded-lg;
+    background: rgba(36, 40, 59, 0.1);
+    border: 1px solid rgba(65, 72, 104, 0.3);
+  }
+
+  .key-info small {
+    @apply text-sm;
+    color: var(--tokyo-text-dim);
+  }
+
+  /* Button Components */
+  .btn {
+    @apply font-semibold rounded-xl border-none cursor-pointer transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply px-8 py-4 text-lg font-bold rounded-2xl shadow-lg text-white;
+    @apply transform hover:scale-105 hover:-translate-y-1;
+    @apply disabled:transform-none disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-encrypt {
+    background: linear-gradient(135deg, var(--tokyo-blue), var(--tokyo-cyan));
+  }
+
+  .btn-decrypt {
+    background: linear-gradient(135deg, var(--tokyo-purple), var(--tokyo-cyan));
+  }
+
+  .btn-secondary {
+    @apply px-8 py-4 text-lg font-bold rounded-2xl shadow-lg;
+    @apply hover:-translate-y-1;
+    background: var(--tokyo-bg-lighter);
+    color: var(--tokyo-text);
+  }
+
+  .btn-secondary:hover {
+    background: var(--tokyo-bg-light);
+  }
+
+  .btn-small {
+    @apply px-4 py-3 text-sm font-semibold hover:-translate-y-1 text-white;
+  }
+
+  .btn-generate {
+    background: linear-gradient(
+      135deg,
+      var(--tokyo-yellow),
+      var(--tokyo-orange)
+    );
+    box-shadow: 0 4px 15px rgba(224, 175, 104, 0.3);
+  }
+
+  .btn-default {
+    background: linear-gradient(135deg, var(--tokyo-purple), var(--tokyo-blue));
+    box-shadow: 0 4px 15px rgba(187, 154, 247, 0.3);
+  }
+
+  .btn-copy {
+    @apply absolute top-4 right-4 px-3 py-1 text-xs rounded-lg text-white;
+    @apply hover:-translate-y-1 transition-all duration-300;
+    background: linear-gradient(135deg, var(--tokyo-green), var(--tokyo-cyan));
+    box-shadow: 0 4px 15px rgba(158, 206, 106, 0.3);
+  }
+
+  /* Layout Sections */
+  .action-section {
+    @apply flex justify-center gap-6 my-8 flex-wrap;
+    @apply lg:col-span-2 lg:justify-self-center lg:max-w-2xl;
+  }
+
+  .output-container {
+    @apply relative lg:flex-1;
+  }
+
+  .error {
+    @apply px-6 py-4 rounded-2xl backdrop-blur-sm my-6 flex items-center gap-3 font-medium;
+    @apply lg:col-span-2 lg:max-w-4xl lg:justify-self-center;
+    background: rgba(247, 118, 142, 0.1);
+    border: 2px solid var(--tokyo-red);
+    color: var(--tokyo-red);
+    box-shadow: 0 8px 25px rgba(247, 118, 142, 0.2);
+  }
+
+  .info {
+    @apply text-center mt-12 p-8 rounded-2xl backdrop-blur-sm;
+    @apply lg:col-span-2 lg:max-w-4xl lg:justify-self-center;
+    color: var(--tokyo-text-dim);
+    background: rgba(36, 40, 59, 0.1);
+    border: 1px solid rgba(65, 72, 104, 0.3);
+  }
+
+  .info p {
+    @apply mb-2 font-medium last:mb-0;
+  }
+}
