@@ -565,7 +565,7 @@ https://www.adobe.com/be_en/active-use/pdf/Alice_in_Wonderland.pdf
    - Next usage of page 28: Start from `Mouse` → Extract `Mouse`, `was`, `swimming`
 
 3. **Personal Salt Addition**: Append your shared secret number/phrase
-   - Final password: `Again!Forthe888` (where 888 is your pre-agreed secret)
+   - Final password: `againForthe888` (where 888 is your pre-agreed secret)
 
 4. **Word Tracking**: Mark used words with a pen to ensure synchronization
    - Next occurrence of day 28: Use next three words (`Mouse`, `was`, `swimming`)
